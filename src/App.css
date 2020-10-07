@@ -1,34 +1,21 @@
-ul{
+ul {
   list-style-type: none;
-  margin:0;
+  margin: 0;
 }
 
-.app-wrapper{
+.app-wrapper {
   margin: 0 auto;
   display: grid;
-  grid-template-areas: 
-  "h h"
-  "n c";
+  grid-template-areas:
+    "h h"
+    "n c";
   grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr;
   grid-gap: 10px;
   width: 1200px
 }
-.header img{
-  width: 30px;
-}
 
-.header{
-grid-area: h;
-background-color: lightblue;
-}
-
-.nav{
-grid-area: n;
-background-color: lightblue;
-}
-
-.content{
-grid-area: c;
-background-color: lightblue;
+.app-wrapper-content {
+  grid-area: c;
+  background-color: lightblue;
 }

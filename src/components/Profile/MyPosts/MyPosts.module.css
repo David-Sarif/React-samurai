@@ -1,0 +1,11 @@
+.content {
+    grid-area: c;
+    background-color: lightblue;
+}
+
+.postsBlock {
+    padding: 10px;
+}
+.posts{
+    padding-top: 20px;
+}
