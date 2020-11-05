@@ -1,71 +1,44 @@
 import React from 'react';
 import classes from './Dialogs.module.css';
-import { NavLink } from 'react-router-dom';
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message'
+import { sendMessageActionCreator, onMessageFieldChangeActionCreator} from '../../redux/dialogsReducer'
 
-const DialogItem = (props) => {
-    let path = '/dialogs/' + props.id;
-    return (
-        <div className={classes.dialog + props.className}>
-            <NavLink to={path}>{props.name}</NavLink>
-        </div>
-    );
-}
-const Message = (props) => {
-    return (
-        <div className={classes.message}>{props.message}</div>
-    )
-}
 const Dialogs = (props) => {
-
-    let dialogsData = [{
-        id: '1',
-        name: 'Ivan',
-        className:` ${classes.active}`,
-    },
-    {
-        id: '2',
-        name: 'Dimon'
-    },
-    {
-        id: '3',
-        name: 'Semen',
-    },
-    {
-        id: '4',
-        name: 'Oleg'
-    },];
-
-    let messagesData = [{
-        id: '1',
-        message: 'hi',
-    },
-    {
-        id: '2',
-        message: 'hello'
-    },
-    {
-        id: '3',
-        message: 'whatcha doing',
-    },
-    {
-        id: '4',
-        message: 'kinda nothing'
-    },]
-
-    let dialogsElements = dialogsData.map((elem, index) => {
-        return <DialogItem name={elem.name} id={elem.id} key={index} className={elem.className} />
+    debugger
+    let dialogsElements = props.dialogsPage.dialogsData.map((elem, index) => {
+        return <DialogItem name={elem.name} id={elem.id} key={index} className={elem.active ? ' '+classes.active : ''} avatar={elem.avatar} />
     });
-    let messagesElements = messagesData.map((elem,index) => <Message message={elem.message} key={index}/>)
+    let messagesElements = props.dialogsPage.messagesData.map((elem, index) => <Message message={elem.message} key={index} direction={elem.direction} />)
+
+    let sendMessage = () => {
+
+        props.dispatch(sendMessageActionCreator());
+        
+    }
+
+    let onMessageFieldChange = (event) => {
+        let text = event.target.value;
+        props.dispatch(onMessageFieldChangeActionCreator(text))
+    }
 
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogsItems}>
                 {dialogsElements}
-               
+
             </div>
             <div className={classes.messages}>
-            {messagesElements}
+                {messagesElements}
+                
             </div>
+            <div></div>
+            <div className={classes.addMessage}>
+            <textarea name="" id="" cols="30" rows="10" className={classes.textarea}
+             onChange={onMessageFieldChange} value={props.dialogsPage.newMessageText}></textarea>
+            <button className={classes.buttonSend} onClick={sendMessage}>SEND</button>
+            </div>
+            
         </div>
     );
 }

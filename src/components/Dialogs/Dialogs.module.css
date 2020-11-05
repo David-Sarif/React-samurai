@@ -8,16 +8,59 @@
 
 }
 .dialog{
-    list-style-type: disc;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
 }   
 .messages{
-
-} 
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 2px solid white;
+}
 .message{
-
+    font-size: 18px;
+    border-bottom: 1px solid blue;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .active{
     font-weight: 700;
     color: gold;
+}
+.avatar{
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+
+}
+
+.income{
+    text-align: left;
+}
+
+.outcome{
+    text-align: right;
+}
+
+.addMessage{
+    margin-top: 15px;
+    /* width: 70%; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.textarea{
+    width: 40%;
+}
+
+.buttonSend{
+    width: 29%;
+    /* margin: 0 auto; */
+    margin-top: 15px;
+    margin-right: 40px;
+    height: 35px;
+    border-radius: 15px;
 }
