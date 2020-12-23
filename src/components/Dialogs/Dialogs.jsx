@@ -4,6 +4,7 @@ import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message'
 
 const Dialogs = (props) => {
+    // debugger
     let dialogsElements = props.dialogsPage.dialogsData.map((elem, index) => {
         return <DialogItem name={elem.name} id={elem.id} key={index} className={elem.active ? ' '+classes.active : ''} avatar={elem.avatar} />
     });
@@ -14,7 +15,6 @@ const Dialogs = (props) => {
     }
 
     let onMessageFieldChange = (event) => {
-        // debugger
         let text = event.target.value;
         props.messageFieldChange(text);
     }
