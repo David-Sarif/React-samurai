@@ -1,3 +1,15 @@
 .descrBlock{
     padding: 10px;
 }
+
+.avatar{
+    border-radius: 20%;
+}
+.fullName{
+    text-transform: capitalize;
+    font-size: 2rem;
+}
+
+.isJobReady{
+    border-bottom: 2px solid limegreen;
+}

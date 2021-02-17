@@ -16,7 +16,7 @@ const Dialogs = (props) => {
 
     let onMessageFieldChange = (event) => {
         let text = event.target.value;
-        props.messageFieldChange(text);
+        props.onMessageFieldChange(text);
     }
 
     return (

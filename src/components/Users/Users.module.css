@@ -6,3 +6,12 @@
     height: 80px;
     width: 80px;
 }
+
+.selectedPage{
+    font-weight: bold;
+}
+
+.pagination span{
+    cursor: pointer;
+    margin-right: 10px;
+}

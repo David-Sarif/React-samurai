@@ -1,55 +1,16 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 let initialState = {
-    users: [
-        // {
-        //     id: '1',
-        //     photoUrl: 'https://www.flaticon.com/svg/static/icons/svg/21/21104.svg',
-        //     fullName: 'Ivan K',
-        //     status: 'SUPERB',
-        //     location: {
-        //         city: 'Minsk',
-        //         country: 'Belarus',
-        //     },
-        //     isFollowed: false,
-        // },
-        // {
-        //     id: '2',
-        //     photoUrl: 'https://www.flaticon.com/svg/static/icons/svg/21/21104.svg',
-        //     fullName: 'Andrew Ivanchenko',
-        //     status: 'Working...',
-        //     location: {
-        //         city: 'Kiev',
-        //         country: 'Ukraine',
-        //     },
-        //     isFollowed: false,
-        // },
-        // {
-        //     id: '3',
-        //     photoUrl: 'https://www.flaticon.com/svg/static/icons/svg/21/21104.svg',
-        //     fullName: 'Sam Brown',
-        //     status: 'Dont stop me now',
-        //     location: {
-        //         city: 'Moscow',
-        //         country: 'Russia',
-        //     },
-        //     isFollowed: false,
-        // },
-        // {
-        //     id: '4',
-        //     photoUrl: 'https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5ed00f17d4a99d0006d2e738%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D154%26cropX2%3D4820%26cropY1%3D651%26cropY2%3D5314',
-        //     fullName: 'Kanye West',
-        //     status: 'POTUS',
-        //     location: {
-        //         city: 'Washington D. C.',
-        //         country: 'USA',
-        //     },
-        //     isFollowed: true,
-        // },
-
-    ]
+    users: [],
+    pageSize: 7,
+    totalUsersCount: 0,
+    currentPage: 1,
+    isFetching: false,
 
 }
 
@@ -60,45 +21,70 @@ const usersReducer = (state = initialState, action) => {
             stateCopy = {
                 ...state, users: state.users.map((user) => {
                     if (user.id === action.userId) {
-                        return { ...user, isFollowed: true }
+                        return { ...user, followed: true }
                     }
-                    return user
+                    return user;
                 })
             }
-            return stateCopy
+            return stateCopy;
         case UNFOLLOW:
             stateCopy = {
                 ...state, users: state.users.map((user) => {
                     if (user.id === action.userId) {
-                        return { ...user, isFollowed: false }
+                        return { ...user, followed: false }
                     }
-                    return user
+                    return user;
                 })
             }
-            return stateCopy
-            case SET_USERS:
-                return {
-                    ...state, users: [...state.users, ...action.users],
+            return stateCopy;
+        case SET_USERS:
+            return {
+                ...state, users: action.users, 
 
-                }
-        
+            }
 
+        case SET_CURRENT_PAGE:
+            return {
+                ...state, currentPage: action.currentPage
+            }
+        case SET_TOTAL_USERS_COUNT:
+            return {
+                ...state, totalUsersCount: action.totalUsersCount
+            }
+        case TOGGLE_IS_FETCHING:
+            return {
+                ...state, isFetching: action.isFetching
+            }    
         default:
             return state
     }
 
 }
-export const followAC = (userId) => ({
+export const follow = (userId) => ({
     type: FOLLOW,
     userId,
 })
-export const unFollowAC = (userId) => ({
+export const unFollow = (userId) => ({
     type: UNFOLLOW,
     userId,
 })
-export const setUsersAC = (users) => ({
+export const setUsers = (users) => ({
     type: SET_USERS,
     users,
+})
+
+export const setCurrentPage = (currentPage) => ({
+    type: SET_CURRENT_PAGE,
+    currentPage,
+})
+export const setTotalUsersCount = (totalUsersCount) => ({
+    type: SET_TOTAL_USERS_COUNT,
+    totalUsersCount,
+})
+
+export const toggleIsFetching = (isFetching) => ({
+    type: TOGGLE_IS_FETCHING,
+    isFetching,
 })
 
 

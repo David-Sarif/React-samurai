@@ -1,8 +1,25 @@
-.header img{
-    width: 30px;
-  }
-  
-  .header{
+.header img {
+  width: 30px;
+}
+
+.header {
   grid-area: h;
   background-color: lightblue;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem
+}
+
+
+.loginWrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avatarSmall{
+  margin: 0 1rem;
+}
