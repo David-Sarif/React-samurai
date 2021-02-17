@@ -3,17 +3,18 @@ import * as axios from 'axios'
 import { connect } from 'react-redux'
 import Header from './Header'
 import { setUserData, setUserAvatarSmall } from '../../redux/authReducer'
+import { authAPI } from '../../api/api'
 
 class HeaderContainer extends React.Component {
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, { withCredentials: true })
-            .then(res => {
-                if (res.data.resultCode === 0) {
-                    let { id, email, login } = res.data.data
+        authAPI.authMe().then(res => {
+                if (res.resultCode === 0) {
+                    let { id, email, login } = res.data
                     this.props.setUserData(id, email, login);
+                    authAPI.setAvatar(id)
                     axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + id)
                         .then(res => {
-                            this.props.setUserAvatarSmall(res.data.photos.small);
+                            this.props.setUserAvatarSmall(res);
 
 
                         })

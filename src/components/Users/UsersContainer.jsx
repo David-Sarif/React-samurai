@@ -1,20 +1,21 @@
 import { connect } from 'react-redux';
 import { unFollow, follow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching } from '../../redux/usersReducer';
-import axios from 'axios';
+// import axios from 'axios';
 import React from 'react';
 import Users from './Users'
 import Spinner from '../Spinner/Spinner';
+import  { usersAPI } from '../../api/api'
 
 
 class UsersAPIComponent extends React.Component {
 
   componentDidMount() {
     this.props.toggleIsFetching(true)
-    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
-      .then(res => {
-
-        this.props.setUsers([...res.data.items]);
-        this.props.setTotalUsersCount(res.data.totalCount);
+    usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(res => {
+      
+        this.props.setUsers([...res.items]);
+        
+        this.props.setTotalUsersCount(res.totalCount);
         this.props.toggleIsFetching(false);
 
       });
@@ -26,9 +27,9 @@ class UsersAPIComponent extends React.Component {
 
     this.props.setCurrentPage(pageNumber);
     this.props.toggleIsFetching(true)
-    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,{withCredentials: true})
-      .then(res => {
-        this.props.setUsers([...res.data.items]);
+    usersAPI.getUsers(pageNumber, this.props.pageSize)
+    .then(res => {
+        this.props.setUsers([...res.items]);
         this.props.toggleIsFetching(false);
       });
   }
