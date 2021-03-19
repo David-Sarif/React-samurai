@@ -1,25 +1,26 @@
 import React from 'react'
-import * as axios from 'axios'
+// import * as axios from 'axios'
 import { connect } from 'react-redux'
 import Header from './Header'
-import { setUserData, setUserAvatarSmall } from '../../redux/authReducer'
-import { authAPI } from '../../api/api'
+import { authMeThunk } from '../../redux/authReducer'
+// import { authAPI } from '../../api/api'
 
 class HeaderContainer extends React.Component {
     componentDidMount() {
-        authAPI.authMe().then(res => {
-                if (res.resultCode === 0) {
-                    let { id, email, login } = res.data
-                    this.props.setUserData(id, email, login);
-                    authAPI.setAvatar(id)
-                    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + id)
-                        .then(res => {
-                            this.props.setUserAvatarSmall(res);
+        this.props.authMeThunk()
+        // authAPI.authMe().then(res => {
+        //         if (res.resultCode === 0) {
+        //             let { id, email, login } = res.data
+        //             this.props.setUserData(id, email, login);
+        //             authAPI.setAvatar(id)
+        //             // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + id)
+        //             //     .then(res => {
+        //             //         this.props.setUserAvatarSmall(res);
 
 
-                        })
-                }
-            })
+        //             //     })
+        //         }
+        //     })
     }
     render() {
         return (
@@ -37,4 +38,4 @@ const mapStateToProps = (state) => {
 
 }
 
-export default connect(mapStateToProps, { setUserData, setUserAvatarSmall })(HeaderContainer)
+export default connect(mapStateToProps, { authMeThunk })(HeaderContainer)

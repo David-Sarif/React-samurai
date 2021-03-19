@@ -13,3 +13,6 @@
 .isJobReady{
     border-bottom: 2px solid limegreen;
 }
+.isJobNotReady{
+    border-bottom: 2px solid red;
+}

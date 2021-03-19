@@ -3,7 +3,9 @@ import dialogsReducer from './dialogsReducer';
 import sidebarReducer from './sidebarReducer';
 import usersReducer from './usersReducer';
 import authReducer from './authReducer';
-const { createStore, combineReducers } = require("redux");
+import thunkMiddleware from 'redux-thunk';
+const { createStore, combineReducers, applyMiddleware } = require("redux");
+
 
 
 
@@ -15,8 +17,8 @@ let reducers = combineReducers({
     auth: authReducer,
 })
 
-let store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-
+let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+// , window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 window.store = store;
 
 export default store;

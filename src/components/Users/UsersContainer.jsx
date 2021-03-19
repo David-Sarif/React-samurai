@@ -1,51 +1,34 @@
 import { connect } from 'react-redux';
-import { unFollow, follow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching } from '../../redux/usersReducer';
-// import axios from 'axios';
+import {
+  setCurrentPage,
+  getUsers,
+  followThunk,
+  unFollowThunk,
+} from '../../redux/usersReducer';
 import React from 'react';
 import Users from './Users'
 import Spinner from '../Spinner/Spinner';
-import  { usersAPI } from '../../api/api'
 
 
 class UsersAPIComponent extends React.Component {
 
   componentDidMount() {
-    this.props.toggleIsFetching(true)
-    usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(res => {
-      
-        this.props.setUsers([...res.items]);
-        
-        this.props.setTotalUsersCount(res.totalCount);
-        this.props.toggleIsFetching(false);
-
-      });
-
+    this.props.getUsers(this.props.currentPage, this.props.pageSize)
 
   }
 
   onPageChange = (pageNumber) => {
 
+    this.props.getUsers(pageNumber, this.props.pageSize)
+
     this.props.setCurrentPage(pageNumber);
-    this.props.toggleIsFetching(true)
-    usersAPI.getUsers(pageNumber, this.props.pageSize)
-    .then(res => {
-        this.props.setUsers([...res.items]);
-        this.props.toggleIsFetching(false);
-      });
   }
 
   render() {
     return (
       <>
         {this.props.isFetching ? <Spinner /> : undefined}
-        <Users totalUsersCount={this.props.totalUsersCount}
-          pageSize={this.props.pageSize}
-          currentPage={this.props.currentPage}
-          onPageChange={this.onPageChange}
-          users={this.props.users}
-          follow={this.props.follow}
-          unFollow={this.props.unFollow} />
-
+        <Users {...this.props} onPageChange={this.onPageChange}/>
       </>)
   }
 
@@ -59,6 +42,7 @@ const mapStateToProps = (state) => {
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
     isFetching: state.usersPage.isFetching,
+    followingInProgress: state.usersPage.followingInProgress
   }
 }
 // const mapDispatchToProps = (dispatch) => {
@@ -85,12 +69,10 @@ const mapStateToProps = (state) => {
 // }
 
 const UsersContainer = connect(mapStateToProps, {
-  follow,
-  unFollow,
-  setUsers,
   setCurrentPage,
-  setTotalUsersCount,
-  toggleIsFetching,
+  getUsers,
+  followThunk,
+  unFollowThunk
 })(UsersAPIComponent)
 
 export default UsersContainer

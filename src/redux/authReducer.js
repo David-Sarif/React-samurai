@@ -1,3 +1,4 @@
+import { authAPI } from '../api/api'
 const SET_USER_DATA = 'SET-USER-DATA';
 const SET_USER_AVATAR_SMALL = 'SET-USER-AVATAR-SMALL'
 
@@ -22,7 +23,7 @@ const authReducer = (state = initialState, action) => {
         case SET_USER_AVATAR_SMALL:
             return {
                 ...state,
-                avatarSmall: action.avatarSmall,
+                avatarSmall: action.response.data.photos.small,
             }  
         default:
             return state;
@@ -35,9 +36,22 @@ export const setUserData = (id, email, login) => ({
     data: { id: id, email: email, login: login },
 });
 
-export const setUserAvatarSmall = (avatarSmall) => ({
+export const setUserAvatarSmall = (response) => ({
     type: SET_USER_AVATAR_SMALL,
-    avatarSmall,
+    response,
 }) 
+
+export const authMeThunk = () => {
+    return (dispatch) => {
+        authAPI.authMe().then(res => {
+            if (res.resultCode === 0) {
+                let { id, email, login } = res.data
+                dispatch(setUserData(id, email, login));
+                authAPI.setAvatar(id)
+            }
+        })
+
+    }
+}
 
 export default authReducer
