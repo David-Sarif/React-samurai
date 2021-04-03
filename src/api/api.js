@@ -23,6 +23,9 @@ export const usersAPI = {
     },
     subscribe(id) {
         return instance.post(`follow/${id}`).then(res => res.data.resultCode)
+    },
+    getProfile(id) {
+        return instance.get(`profile/${id}`)
     }
 }
 

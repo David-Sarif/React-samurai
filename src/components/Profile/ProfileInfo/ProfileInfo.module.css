@@ -4,6 +4,7 @@
 
 .avatar{
     border-radius: 20%;
+    width: 15rem;
 }
 .fullName{
     text-transform: capitalize;
